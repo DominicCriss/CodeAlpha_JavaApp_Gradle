@@ -6,8 +6,8 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'com.gradleup.shadow' version '8.3.6'
 }
 
 repositories {
@@ -39,7 +39,19 @@ application {
     mainClass = 'codealpha_javaapp_gradle.App'
 }
 
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'codealpha_javaapp_gradle.App'
+        )
+    }
+}
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks.build {
+    dependsOn tasks.shadowJar
 }
